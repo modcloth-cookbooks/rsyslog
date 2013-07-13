@@ -29,7 +29,7 @@ elsif !node['rsyslog']['server']
     Chef::Application.fatal!("The rsyslog::client recipe was unable to determine the remote syslog server. Checked both the server_ip attribute and search()")
   end
 
-  template "/etc/rsyslog.d/49-remote.conf" do
+  template "#{node['rsyslog']['config_prefix']}/rsyslog.d/49-remote.conf" do
     only_if { node['rsyslog']['remote_logs'] && !rsyslog_server.nil? }
     source "49-remote.conf.erb"
     backup false
@@ -41,7 +41,7 @@ elsif !node['rsyslog']['server']
     notifies :restart, "service[#{node['rsyslog']['service_name']}]"
   end
 
-  file "/etc/rsyslog.d/server.conf" do
+  file "#{node['rsyslog']['config_prefix']}/rsyslog.d/server.conf" do
     action :delete
     notifies :reload, "service[#{node['rsyslog']['service_name']}]"
   end

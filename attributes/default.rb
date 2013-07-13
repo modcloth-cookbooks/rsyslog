@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-default["rsyslog"]["config_file"]               = "/etc/rsyslog.conf"
+default["rsyslog"]["config_prefix"]             = "/etc"
 default["rsyslog"]["log_dir"]                   = "/srv/rsyslog"
 default["rsyslog"]["server"]                    = false
 default["rsyslog"]["protocol"]                  = "tcp"
@@ -48,7 +48,7 @@ when "ubuntu"
 when "arch"
   default["rsyslog"]["service_name"] = "rsyslogd"
 when "smartos"
-  default["rsyslog"]["config_file"] = "/opt/local/etc/rsyslog.conf"
+  default["rsyslog"]["config_prefix"] = "/opt/local/etc"
   default["rsyslog"]["modules"] = %w(immark imsolaris imtcp imudp)
   default["rsyslog"]["group"] = "root"
 end
