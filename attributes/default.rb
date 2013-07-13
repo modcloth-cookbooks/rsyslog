@@ -17,9 +17,9 @@
 # limitations under the License.
 #
 
+default["rsyslog"]["config_file"]               = "/etc/rsyslog.conf"
 default["rsyslog"]["log_dir"]                   = "/srv/rsyslog"
 default["rsyslog"]["server"]                    = false
-default["rsyslog"]["enable_imklog"]             = true
 default["rsyslog"]["protocol"]                  = "tcp"
 default["rsyslog"]["port"]                      = 514
 default["rsyslog"]["server_ip"]                 = nil
@@ -35,6 +35,7 @@ default["rsyslog"]["service_name"]     = "rsyslog"
 default["rsyslog"]["user"] = "root"
 default["rsyslog"]["group"] = "adm"
 default["rsyslog"]["priv_seperation"] = false
+default["rsyslog"]["modules"] = %(imuxsock imklog)
 
 case node["platform"]
 when "ubuntu"
@@ -46,4 +47,8 @@ when "ubuntu"
   end
 when "arch"
   default["rsyslog"]["service_name"] = "rsyslogd"
+when "smartos"
+  default["rsyslog"]["config_file"] = "/opt/local/etc/rsyslog.conf"
+  default["rsyslog"]["modules"] = %w(immark imsolaris imtcp imudp)
+  default["rsyslog"]["group"] = "root"
 end
