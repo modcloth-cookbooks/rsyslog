@@ -34,11 +34,12 @@ end
 
 # Our main stub which then does its own rsyslog-specific
 # include of things in /etc/rsyslog.d/*
-template '/etc/rsyslog.conf' do
+template node['rsyslog']['config_file'] do
   source  'rsyslog.conf.erb'
   owner   'root'
   group   'root'
   mode    '0644'
+  variables(:protocol => node['rsyslog']['protocol'])
   notifies :restart, "service[#{node['rsyslog']['service_name']}]"
 end
 
@@ -54,6 +55,11 @@ end
 if platform_family?('rhel') && node['platform_version'].to_i < 6
   service 'syslog' do
     action [:stop, :disable]
+  end
+# syslog needs to be stopped before rsyslog can be started on SmartOS
+elsif platform_family?('smartos')
+  service 'system-log' do
+    action :disable
   end
 end
 

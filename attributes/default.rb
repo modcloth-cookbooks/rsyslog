@@ -33,12 +33,14 @@ default['rsyslog']['high_precision_timestamps'] = false
 default['rsyslog']['repeated_msg_reduction']    = 'on'
 default['rsyslog']['logs_to_forward']           = '*.*'
 default['rsyslog']['enable_imklog']             = true
+default['rsyslog']['config_file']               = '/etc/rsyslog.conf'
 
 # The most likely platform-specific attributes
 default['rsyslog']['service_name']              = 'rsyslog'
 default['rsyslog']['user']                      = 'root'
 default['rsyslog']['group']                     = 'adm'
 default['rsyslog']['priv_seperation']           = false
+default['rsyslog']['modules'] = %w(imuxsock imklog)
 
 case node['platform']
 when 'ubuntu'
@@ -50,4 +52,8 @@ when 'ubuntu'
   end
 when 'arch'
   default['rsyslog']['service_name'] = 'rsyslogd'
+when 'smartos'
+  default['rsyslog']['config_file'] = '/opt/local/etc/rsyslog.conf'
+  default['rsyslog']['modules'] = %w(immark imsolaris imtcp imudp)
+  default['rsyslog']['group'] = 'root'
 end
