@@ -20,7 +20,7 @@
 package 'rsyslog'
 package 'rsyslog-relp' if node['rsyslog']['use_relp']
 
-directory '/etc/rsyslog.d' do
+directory "#{node['rsyslog']['config_prefix']}/rsyslog.d" do
   owner 'root'
   group 'root'
   mode  '0755'
@@ -34,7 +34,7 @@ end
 
 # Our main stub which then does its own rsyslog-specific
 # include of things in /etc/rsyslog.d/*
-template node['rsyslog']['config_file'] do
+template "#{node['rsyslog']['config_prefix']}/rsyslog.conf" do
   source  'rsyslog.conf.erb'
   owner   'root'
   group   'root'
@@ -43,7 +43,7 @@ template node['rsyslog']['config_file'] do
   notifies :restart, "service[#{node['rsyslog']['service_name']}]"
 end
 
-template '/etc/rsyslog.d/50-default.conf' do
+template "#{node['rsyslog']['config_prefix']}/rsyslog.d/50-default.conf" do
   source  '50-default.conf.erb'
   owner   'root'
   group   'root'

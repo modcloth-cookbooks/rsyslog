@@ -33,7 +33,7 @@ default['rsyslog']['high_precision_timestamps'] = false
 default['rsyslog']['repeated_msg_reduction']    = 'on'
 default['rsyslog']['logs_to_forward']           = '*.*'
 default['rsyslog']['enable_imklog']             = true
-default['rsyslog']['config_file']               = '/etc/rsyslog.conf'
+default['rsyslog']['config_prefix']             = '/etc'
 
 # The most likely platform-specific attributes
 default['rsyslog']['service_name']              = 'rsyslog'
@@ -53,7 +53,7 @@ when 'ubuntu'
 when 'arch'
   default['rsyslog']['service_name'] = 'rsyslogd'
 when 'smartos'
-  default['rsyslog']['config_file'] = '/opt/local/etc/rsyslog.conf'
+  default['rsyslog']['config_prefix'] = '/opt/local/etc'
   default['rsyslog']['modules'] = %w(immark imsolaris imtcp imudp)
   default['rsyslog']['group'] = 'root'
 end

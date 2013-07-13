@@ -68,6 +68,6 @@ $PrivDropToUser <%= node['rsyslog']['user'] %>
 $PrivDropToGroup <%= node['rsyslog']['group'] %>
 <% end %>
 #
-# Include all config files in /etc/rsyslog.d/
+# Include all config files in <%= node['rsyslog']['config_prefix'] %>/rsyslog.d/
 #
-$IncludeConfig /etc/rsyslog.d/*.conf
+$IncludeConfig <%= node['rsyslog']['config_prefix'] %>/rsyslog.d/*.conf
