@@ -40,7 +40,7 @@ default['rsyslog']['service_name']              = 'rsyslog'
 default['rsyslog']['user']                      = 'root'
 default['rsyslog']['group']                     = 'adm'
 default['rsyslog']['priv_seperation']           = false
-default['rsyslog']['modules'] = %w(imuxsock imklog)
+default['rsyslog']['modules']                   = %w(imuxsock imklog)
 
 case node['platform']
 when 'ubuntu'
